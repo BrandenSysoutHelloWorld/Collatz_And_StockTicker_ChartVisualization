@@ -1,6 +1,7 @@
 ﻿namespace Collatz_ChartVisualization
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Windows.Forms;
@@ -16,9 +17,13 @@
 
         private Random StockRandom = new Random();
 
+        private double value = new double();
+
         private double StockPriceRandom = new double();
 
         private List<double> StockPriceList = new List<double>();
+
+        private Queue<double> q = new Queue<double>();
 
 
         //------------ BUTTONS --------------//
@@ -33,12 +38,17 @@
         }
 
         private void button2_Click_1(object sender, EventArgs e)
-        {   
-           string sequence = RandomStock().ToString() + ";";
+        {
 
-            for (int i = 1; i < 200; i++)
+            InitializeGraph();
+            string sequence = RandomStock().ToString() + ";";
+            StockPriceList.Clear();
+            q.Clear();
+
+            for (int i = 0; i < 200; i++)
             {
                 chart2.Series[0].Points.AddY(RandomStock());
+                chart2.Series[1].Points.AddY(MA50());
                 sequence += RandomStock().ToString() + "; ";
 
             }
@@ -77,6 +87,7 @@
         private void InitializeGraph()
         {
             chart2.Series[0].Points.Clear();
+            chart2.Series[1].Points.Clear();
             textBox2.Text = "";
         }
 
@@ -85,9 +96,24 @@
             double random = StockRandom.Next(-2, 3);
             StockPriceRandom = Math.Round(StockPriceRandom + random);
             StockPriceList.Add(StockPriceRandom);
-            return StockPriceRandom;          
+            return StockPriceRandom;         
 
         }
 
+        private double MA50()
+        {
+            if (this.q.Count < 50)
+            {
+                this.q.Enqueue(this.StockPriceRandom);
+                value = this.q.Dequeue() + value;
+               
+            }
+            else
+            {
+                this.q.Dequeue();
+                this.q.Enqueue(this.StockPriceRandom);
+            }
+            return value/50;
+        }
     }
 }

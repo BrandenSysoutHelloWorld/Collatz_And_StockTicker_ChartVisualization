@@ -33,6 +33,7 @@ namespace Collatz_ChartVisualization
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -166,6 +167,7 @@ namespace Collatz_ChartVisualization
             chartArea1.AxisY.MaximumAutoSize = 50F;
             chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
             chartArea1.AxisY2.MaximumAutoSize = 50F;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
             chartArea1.CursorX.LineColor = System.Drawing.Color.Blue;
             chartArea1.CursorY.LineColor = System.Drawing.Color.Blue;
             chartArea1.Name = "ChartArea1";
@@ -185,7 +187,11 @@ namespace Collatz_ChartVisualization
             series1.Name = "Series1";
             series1.SmartLabelStyle.Enabled = false;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Name = "Series2";
             this.chart2.Series.Add(series1);
+            this.chart2.Series.Add(series2);
             this.chart2.Size = new System.Drawing.Size(2997, 1111);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart1";
