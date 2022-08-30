@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     public partial class Form1 : Form
@@ -39,17 +40,18 @@
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-
             InitializeGraph();
-            string sequence = RandomStock().ToString() + ";";
-            StockPriceList.Clear();
-            q.Clear();
+            string sequence = MA50().ToString() + ";";
 
-            for (int i = 0; i < 200; i++)
+            StockPriceList = new List<double>();
+            StockRandom = new Random();
+            value = new double();
+
+            for (int i = 0; i < 2000; i++)
             {
                 chart2.Series[0].Points.AddY(RandomStock());
                 chart2.Series[1].Points.AddY(MA50());
-                sequence += RandomStock().ToString() + "; ";
+                sequence += MA50().ToString() + "; ";
 
             }
             textBox2.Text = sequence;
@@ -102,17 +104,17 @@
 
         private double MA50()
         {
-            if (this.q.Count < 50)
+            //var q = new Queue<int>();
+            
+            if (q.Count < 50)
             {
-                this.q.Enqueue(this.StockPriceRandom);
-                value = this.q.Dequeue() + value;
-               
+                q.Enqueue(this.StockPriceRandom);
+                value = q.Sum();
             }
             else
-            {
-                this.q.Dequeue();
-                this.q.Enqueue(this.StockPriceRandom);
-            }
+            {                
+                q.Dequeue();
+            }          
             return value/50;
         }
     }

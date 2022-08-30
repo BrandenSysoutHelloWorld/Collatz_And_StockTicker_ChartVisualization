@@ -177,7 +177,6 @@ namespace Collatz_ChartVisualization
             this.chart2.Margin = new System.Windows.Forms.Padding(0);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.IsVisibleInLegend = false;
